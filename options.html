@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zambeel to Shopify - Settings</title>
+  <link rel="stylesheet" href="fonts.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>Zambeel to Shopify settings</h1>
+    <p class="lead">Connect your Shopify store once. After that, importing a Zambeel product is one click.</p>
+
+    <label for="domain">Shopify store domain</label>
+    <input id="domain" type="text" placeholder="yourstore.myshopify.com" spellcheck="false" />
+    <p class="field-hint">Use the <code>.myshopify.com</code> domain, not your custom domain. Find it in your admin URL: <code>admin.shopify.com/store/<b>your-handle</b></code> becomes <code>your-handle.myshopify.com</code>.</p>
+
+    <label for="clientId">Client ID</label>
+    <input id="clientId" type="text" placeholder="e.g. 1a2b3c4d..." spellcheck="false" />
+
+    <label for="clientSecret">Client Secret</label>
+    <input id="clientSecret" type="password" placeholder="e.g. shpss_..." spellcheck="false" />
+
+    <details open>
+      <summary>Where do I get these? (new Dev Dashboard)</summary>
+      <ol>
+        <li>In Shopify admin: <strong>Settings &gt; Apps and sales channels &gt; Develop apps &gt; Build apps in Dev Dashboard</strong>.</li>
+        <li><strong>Create app</strong>, name it "Zambeel Importer".</li>
+        <li>In the app, open <strong>API access</strong> (or Configuration) and add the Admin API scopes <code>write_products</code>, <code>read_products</code>, <code>write_publications</code> and <code>read_publications</code>. Save. (The publications scopes let imports auto-publish to your Online Store.)</li>
+        <li><strong>Install</strong> the app on your store (pick your store, approve).</li>
+        <li>Open the app's <strong>Settings</strong> (or Overview) and copy the <strong>Client ID</strong> and <strong>Client secret</strong> into the fields above.</li>
+      </ol>
+      <p>The extension trades these for a 24-hour Admin API token and refreshes it automatically. Both are stored only in this browser and sent only to your own store.</p>
+    </details>
+
+    <label for="vendor">Brand name (shown as Vendor)</label>
+    <input id="vendor" type="text" placeholder="Your store or brand name" spellcheck="false" />
+    <p class="field-hint">Replaces the supplier so customers can't tell you're dropshipping. The importer also strips "Zambeel" from titles, tags, and image alt text automatically. Leave blank to leave Vendor empty.</p>
+
+    <label class="check-row">
+      <input type="checkbox" id="sourceLink" />
+      <span>
+        Save the Zambeel source link on each product
+        <span class="check-sub">A private "Zambeel source" field on the product (admin only, never shown to customers) so you can jump back to check stock and price.</span>
+      </span>
+    </label>
+
+    <label>Market you dropship</label>
+    <div class="segmented" id="market" role="group" aria-label="Market you dropship">
+      <button type="button" data-val="KSA">KSA only</button>
+      <button type="button" data-val="UAE">UAE only</button>
+      <button type="button" data-val="">Both</button>
+    </div>
+    <p class="field-hint">The popup shows only this market's variants and hides the other, so you never see UAE while selling KSA. Each product's country selector is dropped on import, so customers never see it. "Both" shows every country and lets you pick per product.</p>
+
+    <div class="grid">
+      <div>
+        <label for="markup">Default price markup (x cost)</label>
+        <input id="markup" type="number" min="1" step="0.1" value="2" />
+      </div>
+      <div>
+        <label for="status">Default product status</label>
+        <select id="status">
+          <option value="DRAFT">Draft</option>
+          <option value="ACTIVE">Active</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btn-test" class="secondary">Test connection</button>
+      <button id="btn-save" class="primary">Save</button>
+    </div>
+    <p id="msg" class="msg"></p>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
